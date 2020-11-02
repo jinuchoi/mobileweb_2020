@@ -1,0 +1,32 @@
+﻿<!doctype html>
+<html>
+<head> 
+    <title> 드래그 이벤트 예제 </title> 
+    <meta charset="utf-8"/>
+</head>
+<body>
+	<div id="dragsrc" style="display: block;">
+		<img id="html5" src="icon_html5.png" style="display: inline; width:150px;" draggable = "true">
+		<img id="css3" src="icon_css3.png" style="display: inline; width:150px;" draggable = "false">
+		<img id="js" src="icon_js.png" style="display: inline; width:150px;">
+	</div>
+	<div id="dragprocess"></div>
+
+    <script type="text/javascript">
+    var src = document.getElementById("dragsrc"),
+	    srcId,i=0;
+	    process = document.getElementById("dragprocess");
+
+    src.ondragstart = function(e){
+	    srcId = e.target.id;
+	    process.innerHTML = "start: "+srcId+"<br/>";  
+    }
+    src.ondrag = function(e){  
+		process.innerHTML = "start: "+srcId+"<br/>drag: "+srcId+" ["+(i++)+"]";  
+	}
+    src.ondragend = function(e){
+	    process.innerHTML += "<br/>end: "+srcId+"<br/>";
+    }
+    </script>
+</body>
+</html>

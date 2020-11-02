@@ -1,0 +1,57 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<script>
+function calculateDistance(lat1, lon1, lat2, lon2) {
+	var R = 6371,
+		dLat = (lat2 - lat1).toRad(),
+		dLon = (lon2 - lon1).toRad();
+	var a = Math.sin(dLat / 2) * Math.sin(dLat / 2)
+	   + Math.cos(lat1.toRad()) * Math.cos(lat2.toRad())
+	   * Math.sin(dLon / 2) * Math.sin(dLon / 2),
+		b = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a)),
+		c = R * b;
+	return c;
+}
+Number.prototype.toRad = function() {
+	return this * Math.PI / 180;
+}
+window.onload = function(){
+	var sookLat = 37.450933, 
+		sookLon = 127.128869,
+		sookPos = document.getElementById("sookpos"),
+		currPos = document.getElementById("currpos"),
+		dist = document.getElementById("dist");
+	
+	if(navigator.geolocation) {
+		navigator.geolocation.getCurrentPosition(function(MyPosition){
+			var lat = MyPosition.coords.latitude,
+				lon = MyPosition.coords.longitude,
+				calDist;
+			
+			calDist = calculateDistance(sookLat, sookLon, lat, lon);
+
+			sookPos.innerHTML = sookLat + 'º, ' + sookLon + 'º';
+			currPos.innerHTML = lat + 'º, ' + lon + 'º';
+			dist.innerHTML = calDist + ' km';
+		});
+	}else {
+		alert("지오로케이션이 지원되지 않습니다.");
+	}
+};
+</script>
+</head>
+<body>
+<div style="width: 300px; border-style: double; padding: 10px; padding-top: 20px; padding-bottom: 20px;">
+	<span>가천대학교(위도, 경도) : </span><br/>
+	<div id="sookpos"></div><br/>
+
+	<span>현재 위치(위도, 경도) : </span><br/>
+	<div id="currpos"></div><br/>
+	
+	<span>측정 거리 : </span><br/>
+	<div id="dist"></div>
+</div>
+</body>
+</html>

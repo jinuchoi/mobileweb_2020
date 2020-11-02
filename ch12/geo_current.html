@@ -1,0 +1,32 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title> 단발성 위치 요청 </title> 
+    <meta charset="utf-8"/>
+	<script type="text/javascript">
+	
+	function getMyLocation() { 
+	    if (navigator.geolocation) {
+		    navigator.geolocation.getCurrentPosition(myCallback);
+	    } else {
+		    alert("지오로케이션이 지원되지 않습니다.");
+	    }
+    }
+	function myCallback(myPosition) {
+		var latitude = myPosition.coords.latitude,
+		longitude = myPosition.coords.longitude,
+		date = new Date(myPosition.timestamp),
+		parsedDate = date.toUTCString();
+				
+		document.getElementById("display").innerHTML = '위치: 일시 '+parsedDate
+				 +'에 위도 ' + latitude + ', 경도 ' + longitude + '에 있습니다.';
+	}
+	
+	</script>
+</head>
+<body>
+    <h3>단발성 위치정보 요청하기</h3>
+	<button onclick="getMyLocation();">위치정보 확인</button>
+	<div id="display">위치: </div>
+</body>
+</html>

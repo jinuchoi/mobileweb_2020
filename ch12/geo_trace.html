@@ -1,0 +1,42 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title> 반복적 위치 추적 </title> 
+    <meta charset="utf-8"/>
+	<script type="text/javascript">
+	var watchID, i=0;
+	function startMyLocation() {
+	    if (navigator.geolocation) { 
+			watchID = navigator.geolocation.watchPosition(myCallback); 
+	    } else {
+		    alert("지오로케이션이 지원되지 않습니다.");
+	    }
+	}
+	
+	function myCallback(myPosition) {
+		var latitude = myPosition.coords.latitude,
+		longitude = myPosition.coords.longitude,
+		date = new Date(myPosition.timestamp),
+		parsedDate = date.toUTCString();
+			
+		document.getElementById("display").innerHTML += '<br> ['+(i++)+'] 일시 '+parsedDate
+				 +', 위도 ' + latitude + ', 경도 ' + longitude ;
+	}
+	
+	function stopMyLocation(){
+	    if (navigator.geolocation){
+		    navigator.geolocation.clearWatch(watchID);
+			document.getElementById("display").innerHTML += '<br> ** 추적 종료! **' ;
+	    }else{
+		    alert("지오로케이션이 지원되지 않습니다.");
+	    }
+	}
+	</script>
+</head>
+<body>
+    <h3>반복적 위치 추적하기</h3>
+	<button onclick="startMyLocation();">추적시작</button>
+	<button onclick="stopMyLocation();">추적끝</button>
+	<div id="display"> </div>
+</body>
+</html>

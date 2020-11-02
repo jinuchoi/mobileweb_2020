@@ -1,0 +1,78 @@
+﻿<!doctype html>
+<html>
+<head> 
+    <title> 로컬스토리지 예제 </title> 
+    <meta charset="utf-8"/>
+</head>
+<body onload="pageload();">
+    <h3>로컬 스토리지를 이용한 간단한 목록 작성</h3>
+  
+    <div style="width:600px; height:70px; padding:8px; border:double">   
+        영화소개글 입력<br>
+        - 영화제목: <input type="text" id="title"> <br>
+        - 한줄소개: <input type="text" size="55" id="content">
+        <input type="button" value="추가" onclick="SaveItem()">
+    </div>
+    <p>영화 소개 보기</p>
+    <div style="background-color:#d0f0ff; width:600px; height:90px; padding:8px;">
+        영화선택: <select id="movieList" style="width:200px" onchange="viewContent()">
+                  </select><br>
+        한줄소개: <span id="comment">&nbsp;</span> <br><br>
+        <input type="button" value="삭제" onclick="RemoveItem()">
+        <input type="button" value="전체삭제" onclick="ClearAll()">
+    </div> 
+	
+</body>
+    <script type="text/javascript">
+    var localStorage = window.localStorage;               // 로컬 스토리지
+    var itemList = document.getElementById("movieList");
+    var comment = document.getElementById("comment");
+    var title = document.getElementById("title");
+    var content = document.getElementById("content");
+    var select = document.getElementById("movieList");
+
+    if (!localStorage) {
+        alert("로컬스토리지를 지원하지 않습니다.");
+    }
+
+    function pageload() {   
+        itemList.innerHTML = "";    // 목록 clear
+        comment.innerHTML = "";
+		// 스토리지의 데이터를 리스트에 추가
+        for (var i = 0; i <= localStorage.length - 1; i++) {  // 로컬 스토리지
+            var key = localStorage.key(i);
+            itemList.options[itemList.options.length] = new Option(key, key);
+        }
+    }
+
+    function SaveItem() {           // 스토리지에 저장
+        localStorage.setItem(title.value, content.value);     // 로컬 스토리지
+        pageload();
+    }
+
+    function RemoveItem() {         // 선택한 항목을 스토리지에서 삭제
+        var option_value = select.options[select.selectedIndex].value;
+        localStorage.removeItem(option_value);                // 로컬 스토리지
+        pageload();
+    }
+  
+    function ClearAll() {          // 스토리지의 데이터 모두 삭제
+        localStorage.clear();                                  // 로컬 스토리지
+        pageload();
+    }
+	
+    function viewContent() {       // 선택한 영화의 한줄소개 보기
+        var option_value = select.options[select.selectedIndex].value;
+        comment.innerHTML = localStorage.getItem(option_value); // 로컬 스토리지
+    }
+	
+	window.addEventListener("storage", function(e){
+        var msg = "key: " +e.key + "\n" +
+             "oldValue: " +e.oldValue + "\n" +
+             "newValue: " +e.newValue + "\n" +
+             "url: " +e.url + "\n";
+        alert(msg);
+        pageload();
+    }, true);
+    </script>
+</html>
