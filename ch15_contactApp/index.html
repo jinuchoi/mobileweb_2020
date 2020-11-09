@@ -1,0 +1,145 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="initial-scale=1.0, width=device-width">
+<title>연락처 앱</title>
+
+<!-- 제이쿼리모바일, 제이쿼리, 폰갭 라이브러리 파일(다운로드 방식)  -->         
+<link rel="stylesheet" href="jquery.mobile/jquery.mobile-1.4.5.min.css"/>
+<script src="jquery.mobile/jquery-1.11.1.min.js"></script>
+<script src="jquery.mobile/jquery.mobile-1.4.5.min.js"></script>
+<script src="cordova.js"></script>
+
+<!-- 사용자 정의 자바스크립트 파일  -->
+<script src="contactSearch.js"></script>	
+<script src="contactDisplay.js"></script>	
+<script src="contactAdd.js"></script>	
+
+<script> 
+	$(document).ready(function() {   
+		initCordova();
+
+		$('#btnContactAllSearch').click(function() {
+			searchContactsAll();
+		});
+		$('#btnContactSearch').click(function() {
+			searchContact(); 
+		});			
+		$('#btnContactAdd').click(function() {
+			addContact(); 
+		});			
+	});
+	
+   function initCordova() {
+ 		document.addEventListener('deviceready', onDeviceReady, true);
+	}   
+   function onDeviceReady() {
+		navigator.notification.alert('장치 준비됨', null, '코르도바 API');
+	}         
+</script>
+</head>
+<body>
+
+// 연락처 검색 시작 화면
+<div data-role="page" id="contactSearchPage">
+	<div data-role="header" data-position="fixed">
+		<h1>Cordova API</h1>
+	</div>	
+	<div data-role="content">
+		<div class="ui-body ui-body-a"><br/>	
+			<div class="ui-bar ui-bar-b"><h3>연락처 전체 검색 </h3></div>	
+            <input type="button" id="btnContactAllSearch" value="검색" />		
+		</div>	
+		<br/>			
+		<div class="ui-body ui-body-a"><br/>	
+			<div class="ui-bar ui-bar-b"><h3>연락처 조건 검색 </h3></div><br/>	
+	          <label for="editSearch">이름:</label>
+	          <input type="search" id="searchKey" />
+	          <input type="button" id="btnContactSearch" value="검색" />             
+		</div>			
+  </div>										
+	<div data-role="footer" data-position="fixed">
+		<div data-role="navbar">
+			<ul>
+				<li><a href="#contactSearchPage">연락처 검색하기</a></li>
+				<li><a href="#contactInputPage">연락처 추가하기</a></li>
+			</ul>
+		</div>
+	</div>		
+</div>    
+
+// 연락처 검색 리스트 화면	
+<div data-role="page" id="contactListShowPage" data-add-back-btn="true" >
+	<div data-role="header"  data-position="fixed">
+		<h1>Cordova API</h1>
+	</div>	
+	<div data-role="content" id="contactListArea">
+        <h3>검색결과:</h3>
+        <div>연락처 리스트 표시 영역</div>
+	</div>											
+	<div data-role="footer" data-position="fixed">
+		<div data-role="navbar">
+			<ul>
+				<li><a href="#contactSearchPage">연락처 검색하기</a></li>
+				<li><a href="#contactInputPage">연락처 추가하기</a></li>
+			</ul>
+		</div>
+	</div>		
+</div>	
+	
+// 연락처 상세 정보 화면	
+<div data-role="page" id="contactInfoShowPage" data-position="fixed" data-add-back-btn="true">
+	<div data-role="header">
+		<h1>Cordova API</h1>
+	</div>	
+	<div data-role="content">		
+		<div class="ui-body ui-body-a"><br/>	
+			<div class="ui-bar ui-bar-b"><h3>연락처 정보 </h3></div>	
+			<div id="contactInfoArea">		
+				연락처 정보 표시 영역
+			</div>
+		</div>	
+	</div>
+	<div data-role="footer" data-position="fixed">
+		<div data-role="navbar">
+			<ul>
+				<li><a href="#contactSearchPage">연락처 검색하기</a></li>
+				<li><a href="#contactInputPage">연락처 추가하기</a></li>
+			</ul>
+		</div>
+	</div>		
+</div>			
+	
+// 연락처 입력 화면
+<div data-role="page" id="contactInputPage" data-position="fixed"  data-add-back-btn="true" >
+	<div data-role="header">
+		<h1>Cordova API</h1>
+	</div>		
+	<div data-role="content">
+		<label for="fullName">이름  : </label>
+	 	<input type="text" name="fullName" id="fullName"/>
+	 	<label for="mobilePhone">전화(mobile) : </label>
+		<input type="tel" name="mobilePhone" id="mobilePhone"/>
+		<label for="workPhone">전화(work) : </label>	
+		<input type="tel" name="workPhone" id="workPhone"/>	
+		<label for="homeEmail">이메일(home) : </label>			
+		<input type="email" name="homeEmail" id="homeEmail"/>	
+		<label for="workAddress">장소(work) : </label>													
+		<input type="text" name="workAddress" id="workAddress"/>
+		<label for="homeAddress">장소(home) : </label>	
+		<input type="text" name="homeAddress" id="homeAddress"/>		
+    	<input type="button" id="btnContactAdd" value="연락처 추가"/>
+    </div>											
+	<div data-role="footer" data-position="fixed">
+		<div data-role="navbar">
+			<ul>
+				<li><a href="#contactSearchPage">연락처 검색하기</a></li>
+				<li><a href="#contactInputPage">연락처 추가하기</a></li>
+			</ul>
+		</div>
+	</div>		
+</div>	
+</body>
+</html>  
+

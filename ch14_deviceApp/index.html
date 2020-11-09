@@ -1,0 +1,106 @@
+<!DOCTYPE HTML>
+<<html>
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>단말기 정보 앱</title>
+
+<!-- 제이쿼리모바일, 제이쿼리, 폰갭 라이브러리 파일  -->     
+<link rel="stylesheet" href="jquery.mobile/jquery.mobile-1.4.5.min.css"/>
+<script src="jquery.mobile/jquery-1.11.1.min.js"></script>
+<script src="jquery.mobile/jquery.mobile-1.4.5.min.js"></script>
+<script src="cordova.js"></script>
+
+<!-- 사용자 정의 자바스크립트 파일  -->
+<script src="myDeviceInfo.js"></script>	
+<script> 
+	$(document).ready(function() {   
+		initCordova();			
+		$('#btnDeviceInfo').click(function() {
+			getDeviceInfo();
+		});
+		$('#btnVibrate').click(function() {
+			getVibrate();
+		});			
+		$('#btnCompass').click(function() {
+			getCompass();
+		});			
+		$('#btnBattery').click(function() {
+			getBattery();
+		});	
+		$('#btnConnection').click(function() {
+			getConnection();
+		});	
+		$('#btnLocation').click(function() {
+			getLocation();
+		});							
+	});	
+	
+   function initCordova() {
+ 		document.addEventListener('deviceready', onDeviceReady, true);
+	}   
+   function onDeviceReady() {
+		navigator.notification.alert('장치 준비됨', null, '코르도바 API');
+	} 	
+</script>  
+
+</head>
+<body>
+<div data-role="page" id="page1">
+	<div data-role="header" data-position="fixed">
+		<h1>Cordova API</h1>
+	</div>	
+	<div data-role="content">		
+		<div class="ui-body ui-body-a"><br/>	
+			<div class="ui-bar ui-bar-b"><h3>단말기 정보 </h3></div>	
+			<div id="infoArea">		
+				<p>장치 플랫폼 : </p>
+				<p>OS 버전 : </p>
+				<p>장치 이름 : </p>					
+				<p>장치 UUID : </p>
+				<p>코르도바 버전 : </p>	
+				<p>화면 너비 : </p>
+				<p>화면 높이 : </p>			
+				<p>색상 깊이 : </p>	
+			</div>
+		</div>	
+		<button id="btnDeviceInfo">단말기 정보 확인</button> 
+	</div>
+	<div data-role="footer" data-position="fixed">
+		<div data-role="navbar">
+			<ul>
+				<li><a href="#page1">단말기 정보 확인하기</a></li>
+				<li><a href="#page2">단밀기 장치 제어하기</a></li>
+			</ul>
+		</div>
+	</div>	
+</div>	
+
+<div data-role="page" id="page2">
+	<div data-role="header" data-position="fixed" >
+		<h1>Cordova API</h1>
+	</div>	
+	<div data-role="content">			
+		<div class="ui-body ui-body-a"><br/>	
+			<div class="ui-bar ui-bar-b"><h3>단말기 장치 제어 </h3></div>	
+			<div id="resultArea" >	
+				<p></p>		
+			</div>		
+		</div>	
+		<button id="btnVibrate">진동 시키기</button> 
+		<button id="btnCompass">방위각 알아내기</button> 
+		<button id="btnBattery">배터리잔량 알아내기</button> 		
+		<button id="btnConnection">네트워크연결상태 알아내기</button> 		
+		<button id="btnLocation">현재 위치 알아내기</button> 								
+	</div>
+	<div data-role="footer" data-position="fixed">
+		<div data-role="navbar">
+			<ul>
+				<li><a href="#page1">단말기 정보 확인하기</a></li>
+				<li><a href="#page2">단말기 장치 제어하기</a></li>
+			</ul>
+		</div>
+	</div>		
+</div>	
+</body>
+</html>
